@@ -88,6 +88,8 @@ export default function HomePage() {
             <img src="/logo.png" alt="Prever Services" className={styles.navLogoImg} />
             <span className={styles.navBrand}>PREVER<span className={styles.navBrandSub}>SERVICES</span></span>
           </Link>
+          
+          <h1 className={styles.comments}>Header</h1>
           <ul className={styles.navLinks}>
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#sectores">Sectores</a></li>
@@ -100,6 +102,8 @@ export default function HomePage() {
       {/* HERO */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
+          
+          <h1 className={styles.comments}>HeroSection</h1>
           <p className={styles.heroEyebrow}>Bolivia · 5 años protegiendo lo que importa</p>
           <h1 className={styles.heroTitle}>
             Donde hay fuego,<br />
@@ -129,6 +133,7 @@ export default function HomePage() {
 
       {/* STATS BAND */}
       <section id="stats-band" className={styles.statsBand}>
+        <h1 className={styles.comments} style={{ position: 'absolute', zIndex: 10, pointerEvents: 'none' }}>BandSection</h1>
         <div className={styles.statsGrid}>
           {STATS.map((s, i) => (
             <div key={i} className={`${styles.statItem} ${visibleStats ? styles.statVisible : ''}`} style={{ transitionDelay: `${i * 100}ms` }}>
@@ -142,6 +147,7 @@ export default function HomePage() {
       {/* SERVICES */}
       <section id="servicios" className={styles.services}>
         <div className={styles.sectionInner}>
+          <h1 className={styles.comments}>ServicesSection</h1>
           <p className={styles.sectionEyebrow}>Lo que hacemos</p>
           <h2 className={styles.sectionTitle}>Servicios integrales<br />de protección contra incendios</h2>
           <div className={styles.servicesGrid}>
@@ -161,6 +167,7 @@ export default function HomePage() {
       {/* SECTORS */}
       <section id="sectores" className={styles.sectors}>
         <div className={styles.sectionInner}>
+          <h1 className={styles.comments}>SectorsSection</h1>
           <p className={styles.sectionEyebrow}>¿A quién servimos?</p>
           <h2 className={styles.sectionTitle}>Clientes que no<br />pueden fallar.</h2>
           <p className={styles.sectorsSubtitle}>
@@ -190,6 +197,7 @@ export default function HomePage() {
       <section id="nosotros" className={styles.about}>
         <div className={styles.aboutInner}>
           <div className={styles.aboutText}>
+            <h1 className={styles.comments}>UsSection</h1>
             <p className={styles.sectionEyebrow}>Quiénes somos</p>
             <h2 className={styles.sectionTitle}>5 años siendo<br />la primera llamada.</h2>
             <p className={styles.aboutBody}>
@@ -224,6 +232,7 @@ export default function HomePage() {
       {/* CONTACT */}
       <section id="contacto" className={styles.contact}>
         <div className={styles.contactInner}>
+          <h1 className={styles.comments}>ContactSection</h1>
           <p className={styles.sectionEyebrow}>Contacto</p>
           <h2 className={styles.sectionTitle}>¿Listo para proteger<br />tu empresa?</h2>
           <p className={styles.contactSub}>Nos ponemos en contacto en menos de 24 horas.</p>
@@ -250,6 +259,7 @@ export default function HomePage() {
       {/* FOOTER */}
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
+          <h1 className={styles.comments} style={{ position: 'absolute', zIndex: 10, pointerEvents: 'none' , left:'50px'}}>Footer</h1>
           <span className={styles.footerBrand}>PREVER SERVICES</span>
           <span className={styles.footerCopy}>© {new Date().getFullYear()} · Bolivia · Todos los derechos reservados</span>
         </div>

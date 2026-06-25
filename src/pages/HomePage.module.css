@@ -4,6 +4,11 @@
    ============================================= */
 
 /* ---------- RESET & ROOT ---------- */
+.comments{
+  font-weight: bolder;
+  color: rgb(9, 255, 0);
+}
+
 .root {
   background-color: #000;
   color: #fff;
