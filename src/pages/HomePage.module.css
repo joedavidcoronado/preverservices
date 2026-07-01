@@ -1,13 +1,15 @@
 /* =============================================
    PREVER SERVICES — HomePage.module.css
-   Palette: #202124 base · #FFF text · #F5811F fire · #2a2a2d cards
+   Palette: #202124 base · #FFF text · rgb(244,156,38) fire · #2a2a2d cards
    ============================================= */
 
+/* ---------- DEBUG ---------- */
 .comments {
   font-weight: bolder;
   color: rgb(9, 255, 0);
 }
 
+/* ---------- ROOT ---------- */
 .root {
   background-color: #202124;
   color: #fff;
@@ -45,7 +47,7 @@
 .navLogo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.02rem;
   text-decoration: none;
 }
 
@@ -53,6 +55,10 @@
   height: 40px;
   width: 40px;
   object-fit: contain;
+}
+
+.logoNav {
+  width: 14%;
 }
 
 .navBrand {
@@ -147,6 +153,7 @@
   );
 }
 
+/* ---------- SMOKE VIDEO ---------- */
 .smokeVideo {
   position: absolute;
   bottom: 0;
@@ -155,10 +162,9 @@
   height: 100%;
   object-fit: cover;
   z-index: 1;
-  opacity: 0.35;          /* ajusta entre 0.2 y 0.5 a tu gusto */
-  mix-blend-mode: screen; /* el fondo negro del video desaparece */
+  opacity: 0.35;
+  mix-blend-mode: screen;
   pointer-events: none;
-  /* esto desvanece el borde derecho del video */
   -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
   mask-image: linear-gradient(to right, black 50%, transparent 100%);
 }
@@ -220,8 +226,7 @@
   flex-wrap: wrap;
 }
 
-
-
+/* ---------- HERO VISUAL / LOGO ---------- */
 .heroGlow {
   position: absolute;
   width: 420px;
@@ -230,15 +235,13 @@
   border-radius: 50%;
   pointer-events: none;
   animation: pulse 4s ease-in-out infinite;
-  animation-delay: 2s; /* espera a que terminen las entradas */
+  animation-delay: 2s;
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
+  50%       { opacity: 1;   transform: scale(1.08); }
 }
-
-/* ---------- LOGO ANIMADO POR PARTES ---------- */
 
 .heroVisual {
   position: relative;
@@ -246,21 +249,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px; /* separacion entre stack y frame4 */
+  gap: 20px;
   z-index: 2;
-  /* float arranca después de que terminan las entradas */
   animation: floatLogo 6s ease-in-out infinite;
   animation-delay: 2.2s;
 }
 
-/* Contenedor apilado de frame1 + frame2 + frame3 */
 .logoStack {
   position: relative;
   width: 320px;
   height: 320px;
 }
 
-/* Base de cada frame */
 .logoFrame {
   position: absolute;
   top: 0;
@@ -268,51 +268,39 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  /* ajuste de posicion: modifica top/left/transform si necesitas mover uno */
 }
 
-/* ---- FRAME 1: z-index base, aparición suave (sin fuego) ---- */
 .logoFrame1 {
   z-index: 1;
   opacity: 0;
-  /* Se reduce el escalado extremo y el blur inicial para mayor sobriedad */
   animation: enterElegant 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0ms forwards;
 }
 
 @keyframes enterElegant {
   0%   { opacity: 0; transform: scale(1.05); filter: blur(4px); }
-  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1);    filter: blur(0); }
 }
 
-/* ---- FRAME 3: z-index medio, zoom in sutil ---- */
 .logoFrame3 {
   z-index: 2;
   opacity: 0;
   top: 26.4%;
   left: 19%;
   width: 60%;
-  /* Se elimina el cubic-bezier con rebote (1.56) por una curva de desaceleración limpia */
   animation: enterSeriousZoom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1800ms forwards;
 }
 
 @keyframes enterSeriousZoom {
-  0% { 
-    opacity: 0; 
-    transform: scale(0.4); /* Empieza sutilmente más pequeño */
-  }
-  100% { 
-    opacity: 1; 
-    transform: scale(1); /* Se asienta en su tamaño original sin rebotar */
-  }
+  0%   { opacity: 0; transform: scale(0.4); }
+  100% { opacity: 1; transform: scale(1); }
 }
-/* ---- FRAME 2: z-index alto, fade in limpio ---- */
+
 .logoFrame2 {
   z-index: 3;
   opacity: 0;
   top: 32%;
   left: 24%;
   width: 43.4%;
-  /* Un ease-out clásico funciona perfecto para consolidar el centro */
   animation: enterFadeClean 0.8s ease-out 600ms forwards;
 }
 
@@ -321,14 +309,12 @@
   100% { opacity: 1; }
 }
 
-/* ---- FRAME 4: letras, fuera del stack, abajo ---- */
 .logoFrame4 {
   position: relative;
   width: 320px;
   height: auto;
   z-index: 4;
   opacity: 0;
-  /* El texto asciende sin deformarse (scaleX) ni alterar el letter-spacing, lo que evita "temblores" */
   animation: enterTextClean 0.8s cubic-bezier(0.21, 1.02, 0.73, 1) 1200ms forwards;
 }
 
@@ -342,8 +328,6 @@
   50%       { transform: translateY(-12px); }
 }
 
-
-
 .heroScroll {
   position: absolute;
   bottom: 2rem;
@@ -356,7 +340,10 @@
   z-index: 3;
 }
 
-
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
 
 /* ---------- BUTTONS ---------- */
 .btnPrimary {
@@ -397,10 +384,371 @@
   border-color: rgba(255,255,255,0.6);
 }
 
+/* ---------- CÓMO TE AYUDAMOS ---------- */
+.helpSection {
+  background: #fff;
+  overflow: hidden;
+}
+
+.helpInner {
+  max-width: 1200px;
+  margin: -3% auto -4%;
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.helpEyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(244, 156, 38);
+  margin: 0 0 0.75rem;
+}
+
+.helpTitle {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin: 0 0 3.5rem;
+  color: #111;
+}
+
+.helpAccent {
+  color: rgb(244, 156, 38);
+}
+
+.helpGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.helpCard {
+  position: relative;
+  height: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  cursor: pointer;
+  animation: helpCardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0ms) both;
+}
+
+@keyframes helpCardIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.helpCardBg {
+  position: absolute;
+  inset: 0;
+  background-image: var(--img);
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.helpCard:hover .helpCardBg {
+  transform: scale(1.07);
+}
+
+.helpCardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.92) 0%,
+    rgba(10, 10, 10, 0.5) 45%,
+    rgba(10, 10, 10, 0.1) 100%
+  );
+  transition: background 0.4s ease;
+}
+
+.helpCard:hover .helpCardOverlay {
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.97) 0%,
+    rgba(10, 10, 10, 0.65) 50%,
+    rgba(10, 10, 10, 0.2) 100%
+  );
+}
+
+.helpCardNumber {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.43);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+
+.helpCard:hover .helpCardNumber {
+  color: rgba(244, 155, 38, 0.734);
+}
+
+.helpCardContent {
+  position: relative;
+  z-index: 2;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.helpCardLabel {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+}
+
+.helpCard:hover .helpCardLabel {
+  color: rgb(244, 156, 38);
+}
+
+.helpCardSub {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.55);
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+}
+
+.helpCardCta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #25D366;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.55rem 1rem;
+  border-radius: 100px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.helpCard:hover .helpCardCta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.helpCardLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: rgb(244, 156, 38);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 3;
+}
+
+.helpCard:hover .helpCardLine {
+  width: 100%;
+}
+
+/* ---------- WHY US ---------- */
+.whyUs {
+  background: #202124;
+  overflow: hidden;
+}
+
+.whyUsAccent {
+  color: rgb(244, 156, 38);
+}
+
+.whyUsSteps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2.8rem;
+  flex-wrap: wrap;
+}
+
+.whyUsStepWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.whyUsStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 190px;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.whyUsStepVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.whyUsIconWrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.25rem;
+  margin-top: 1rem;
+}
+
+.whyUsIconRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(245, 129, 31, 0.25);
+  border-top-color: rgb(244, 156, 38);
+  animation: ringRotate 4s linear infinite;
+}
+
+.whyUsStep:hover .whyUsIconRing {
+  border-color: rgba(245, 129, 31, 0.5);
+  border-top-color: rgb(244, 156, 38);
+  animation-duration: 1.5s;
+}
+
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+
+.whyUsIconInner {
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: rgba(245, 129, 31, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.whyUsStep:hover .whyUsIconInner {
+  background: rgba(245, 129, 31, 0.15);
+}
+
+.whyUsIcon {
+  font-size: 2.8rem;
+  color: rgb(244, 156, 38);
+  transition: transform 0.3s ease;
+}
+
+.whyUsStep:hover .whyUsIcon {
+  transform: scale(1.15);
+}
+
+.whyUsStepLabel {
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.01em;
+}
+
+.whyUsStepDesc {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.4);
+  margin: 0;
+  max-width: 145px;
+}
+
+.whyUsArrow {
+  display: flex;
+  align-items: center;
+  gap: -6px;
+  padding: 0 0.5rem;
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  color: rgba(245, 129, 31, 0.3);
+  font-size: 1.2rem;
+}
+
+.whyUsArrowVisible {
+  opacity: 1;
+}
+
+.whyUsArrow2 {
+  opacity: 0.4;
+  margin-left: -6px;
+}
+
+.whyUsDivider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(245, 129, 31, 0.5), transparent);
+  margin-bottom: 3.5rem;
+  transform: scaleX(0);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 900ms;
+}
+
+.whyUsDividerVisible {
+  transform: scaleX(1);
+}
+
+.whyUsClosing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: 1100ms;
+}
+
+.whyUsClosingVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.whyUsClosingIcon {
+  color: rgb(244, 156, 38);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  animation: pinPulse 2.5s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes pinPulse {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-4px) scale(1.15); }
+}
+
+.whyUsClosingText {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 800;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.whyUsClosingAccent {
+  color: rgb(244, 156, 38);
+}
+
 /* ---------- STATS BAND ---------- */
 .statsBand {
   position: relative;
-  background: #2a2a2d;
+  background: #fff;
   border-top: 1px solid rgba(245, 129, 31, 0.15);
   border-bottom: 1px solid rgba(245, 129, 31, 0.15);
   padding: 3rem 2rem;
@@ -430,7 +778,7 @@
   display: block;
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 900;
-  color: #F5811F;
+  color: rgb(35, 33, 33);
   letter-spacing: -0.02em;
   line-height: 1;
 }
@@ -441,7 +789,7 @@
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
+  color: rgb(19, 9, 9);
   margin-top: 0.4rem;
 }
 
@@ -450,6 +798,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 6rem 2rem;
+  text-align: center;
 }
 
 .sectionEyebrow {
@@ -457,7 +806,7 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #F5811F;
+  color: rgb(244, 156, 38);
   margin: 0 0 0.75rem;
 }
 
@@ -477,129 +826,137 @@
 
 .servicesGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
 
 .serviceCard {
-  background: #2a2a2d;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
-  padding: 2rem;
-  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+  height: 480px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(96, 96, 96, 0.878);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
 }
 
 .serviceCard:hover {
-  border-color: rgba(245, 129, 31, 0.4);
-  transform: translateY(-3px);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.serviceCardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    35deg,
+    rgba(28, 29, 31, 0.979) 0%,
+    rgba(32, 33, 36, 0.92) 25%,
+    rgba(32, 33, 36, 0.6) 50%,
+    rgba(32, 33, 36, 0.15) 60%,
+    transparent 100%
+  );
+  transition: background 0.3s ease;
+}
+
+.serviceCard:hover .serviceCardOverlay {
+  background: linear-gradient(
+    35deg,
+    rgba(32, 33, 36, 0.95) 0%,
+    rgba(32, 33, 36, 0.85) 20%,
+    rgba(32, 33, 36, 0.4) 50%,
+    transparent 70%
+  );
+}
+
+.serviceCardContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.75rem;
+  z-index: 1;
 }
 
 .serviceIconWrap {
   width: 48px;
   height: 48px;
-  background: rgba(245, 129, 31, 0.1);
+  background: rgba(244, 156, 38, 0.12);
+  border: 1px solid rgba(244, 156, 38, 0.3);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.serviceCard:hover .serviceIconWrap {
+  background: rgba(244, 156, 38, 0.2);
+  border-color: rgba(244, 156, 38, 0.6);
 }
 
 .serviceIcon {
-  color: #F5811F;
+  color: rgb(244, 156, 38);
   font-size: 1.25rem;
 }
 
 .serviceTitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   margin: 0 0 0.6rem;
   color: #fff;
+  line-height: 1.3;
 }
 
 .serviceDesc {
-  font-size: 0.9rem;
-  line-height: 1.65;
-  color: rgba(255,255,255,0.55);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.6);
   margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
 }
 
-/* ---------- SECTORS ---------- */
-.sectors {
+.serviceCard:hover .serviceDesc {
+  max-height: 120px;
+  opacity: 1;
+}
+
+/* ---------- SEPARADOR ---------- */
+.sectionDivider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  margin: -70px 0 -150px;
+}
+
+.extSeparator {
+  width: 45%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 10px rgba(0,0,0,0.4));
+}
+
+/* ---------- NOSOTROS ---------- */
+.about {
   background: #2a2a2d;
 }
 
-.sectorsSubtitle {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.55);
-  max-width: 560px;
-  margin: -1.5rem 0 2.5rem;
-}
-
-.sectorsRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 3rem;
-}
-
-.sectorPill {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: #202124;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 100px;
-  padding: 0.6rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.75);
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.sectorPill:hover {
-  border-color: rgba(245, 129, 31, 0.5);
-  color: #fff;
-}
-
-.sectorIcon {
-  color: #F5811F;
-  font-size: 0.9rem;
-}
-
-.testimonialBox {
-  background: #202124;
-  border-left: 3px solid #F5811F;
-  border-radius: 0 8px 8px 0;
-  padding: 2rem 2.5rem;
-}
-
-.testimonialStar {
-  color: #F5811F;
-  font-size: 0.9rem;
-  margin-bottom: 0.75rem;
-  display: block;
-}
-
-.testimonialQuote {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: rgba(255,255,255,0.8);
-  font-style: italic;
-  margin: 0 0 1rem;
-}
-
-.testimonialAuthor {
-  font-size: 0.78rem;
-  letter-spacing: 0.05em;
-  color: rgba(255,255,255,0.35);
-  font-style: normal;
-}
-
-/* ---------- ABOUT ---------- */
-.about {
-  background: #202124;
+.sectionEyebrow2 {
+  margin-top: 7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(244, 156, 38);
 }
 
 .aboutInner {
@@ -645,9 +1002,37 @@
   flex-shrink: 0;
 }
 
+.aboutSocials {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.aboutSocialLink {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(244, 156, 38, 0.3);
+  background: rgba(244, 156, 38, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(244, 156, 38);
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.aboutSocialLink:hover {
+  background: rgba(244, 156, 38, 0.18);
+  border-color: rgb(244, 156, 38);
+  transform: translateY(-3px);
+}
+
 /* ---------- CONTACT ---------- */
 .contact {
-  background: #2a2a2d;
+  background: #fff;
   border-top: 1px solid rgba(245, 129, 31, 0.12);
 }
 
@@ -658,9 +1043,18 @@
   text-align: center;
 }
 
+.contactTitle {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin: 0 0 3rem;
+  color: #19191c;
+}
+
 .contactSub {
   font-size: 1rem;
-  color: rgba(255,255,255,0.5);
+  color: rgba(49, 49, 49, 0.952);
   margin: -1.5rem 0 3rem;
 }
 
@@ -700,7 +1094,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255, 255, 255, 0.564);
 }
 
 .contactCardValue {
@@ -740,7 +1134,10 @@
   color: rgba(255,255,255,0.3);
 }
 
-/* ---------- RESPONSIVE ---------- */
+/* =============================================
+   RESPONSIVE — todos los @media al final
+   ============================================= */
+
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -767,14 +1164,31 @@
     justify-content: center;
   }
 
-  .heroLogo {
-    width: 260px;
-    height: 260px;
-  }
-
   .heroGlow {
     width: 280px;
     height: 280px;
+  }
+
+  .helpGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .helpCard {
+    height: 380px;
+  }
+
+  .whyUsSteps {
+    gap: 2rem;
+  }
+
+  .whyUsArrow {
+    display: none;
+  }
+
+  .whyUsClosing {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
   }
 
   .statsGrid {
@@ -782,7 +1196,11 @@
   }
 
   .servicesGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .serviceCard {
+    height: 380px;
   }
 
   .aboutInner {
@@ -804,9 +1222,36 @@
     display: none;
   }
 
+  .helpGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .helpCard {
+    height: 300px;
+  }
+
+  .whyUsSteps {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .whyUsStep {
+    width: 100%;
+    max-width: 240px;
+  }
+
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+  }
+
+  .servicesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .serviceCard {
+    height: 320px;
   }
 
   .sectionInner {
@@ -824,7 +1269,7 @@
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .heroLogo, .heroGlow, .heroScroll {
+  .heroGlow, .heroScroll {
     animation: none;
   }
 

@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { useState, useEffect } from 'react';
 import styles from './HomePage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faInstagram, faTiktok, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import {
   faShieldHalved,
   faFire,
@@ -18,37 +19,38 @@ import {
   faArrowRight,
   faStar,
   faAward,
+  faHandshake,        // nuevo
+  faClipboardList,    // nuevo
+  faRocket,           // nuevo
+  faChevronRight,     // nuevo
 } from '@fortawesome/free-solid-svg-icons';
 
 const HERO_PHOTOS = Array.from({ length: 5 }, (_, i) => `/heroPhotos/${i + 1}.jpg`);
 
-const STATS = [
-  { value: '5+', label: 'Años de experiencia' },
-  { value: '500+', label: 'Clientes activos' },
-  { value: '10K+', label: 'Extintores certificados' },
-  { value: '24/7', label: 'Soporte de emergencia' },
-];
-
 const SERVICES = [
   {
     icon: faFire,
-    title: 'Venta de Extintores',
-    desc: 'Equipos certificados para todo tipo de riesgo: PQS, CO₂, agua, espuma y más.',
+    title: 'Venta de Extintores y equipamiento contra incendios',
+    desc: 'Equipos certificados para todo tipo de riesgo: PQS, CO₂, agua, espuma y más. Mangueras, hidrantes y sus accesorios.',
+    img: '/servicesPhotos/1.jpg',
   },
   {
     icon: faShieldHalved,
     title: 'Recarga y Mantenimiento',
     desc: 'Recarga periódica con insumos de calidad y revisión técnica completa.',
+    img: '/servicesPhotos/2.jpg',
   },
   {
-    icon: faCircleCheck,
-    title: 'Inspección y Certificación',
-    desc: 'Auditorías de seguridad contra incendios con documentación oficial.',
+    icon: faGraduationCap,
+    title: 'Capacitaciones certificadas',
+    desc: 'Seguridad industrial y prevención de riesgos.',
+    img: '/servicesPhotos/3.jpg',
   },
   {
-    icon: faAward,
-    title: 'Capacitación',
-    desc: 'Entrenamiento al personal para el uso correcto de equipos contra incendios.',
+    icon: faShieldHalved,
+    title: 'Consultoría SYSO',
+    desc: 'Seguridad y salud ocupacional. PSST, estudio de carga de fuego y cumplimiento de normativas de los entes regulatorios (NFPA10 y NB58006).',
+    img: '/servicesPhotos/4.jpg',
   },
 ];
 
@@ -63,7 +65,20 @@ const SECTORS = [
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
   const [visibleStats, setVisibleStats] = useState(false);
+  const [countedStats, setCountedStats] = useState([0, 0, 0, 0]);
   const [currentPhoto, setCurrentPhoto] = useState(0);
+
+  const [visibleWhyUs, setVisibleWhyUs] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisibleWhyUs(true); },
+      { threshold: 0.15 }
+    );
+    const el = document.getElementById('why-us');
+    if (el) observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -72,14 +87,40 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisibleStats(true); },
-      { threshold: 0.3 }
-    );
-    const el = document.getElementById('stats-band');
-    if (el) observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setVisibleStats(true);
+
+        const targets =   [5,    500,   15000, 24];
+        const duration = 2000;
+        const steps    = 60;
+        const interval = duration / steps;
+
+        targets.forEach((target, i) => {
+          let current = 0;
+          const increment = target / steps;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+            }
+            setCountedStats(prev => {
+              const next = [...prev];
+              next[i] = Math.floor(current);
+              return next;
+            });
+          }, interval);
+        });
+      }
+    },
+    { threshold: 0.3 }
+  );
+  const el = document.getElementById('stats-band');
+  if (el) observer.observe(el);
+  return () => observer.disconnect();
+}, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -96,7 +137,7 @@ export default function HomePage() {
         <div className={styles.navInner}>
           <Link to="/" className={styles.navLogo}>
             <img src="/favicon.png" alt="Prever Services" className={styles.navLogoImg} />
-            <span className={styles.navBrand}>PREVER<span className={styles.navBrandSub}>SERVICES</span></span>
+            <img src="/frames/frame4.svg" alt="" className={`${styles.logoNav}`} />
           </Link>
           {/*<h1 className={styles.comments}>Header</h1>*/}
           <ul className={styles.navLinks}>
@@ -190,13 +231,162 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* CÓMO TE AYUDAMOS */}
+      <section id="sectores" className={styles.helpSection}>
+        <div className={styles.helpInner}>
+          <p className={styles.helpEyebrow}>Encuentra tu solución</p>
+          <h2 className={styles.helpTitle}>
+            ¿Cómo te podemos <span className={styles.helpAccent}>ayudar?</span>
+          </h2>
+
+          <div className={styles.helpGrid}>
+            {[
+              {
+                label: 'Industria',
+                sub: 'Plantas, fábricas y almacenes',
+                img: '/helpPhotos/1.jpg',
+                msg: 'Hola, necesito información sobre servicios para industria.',
+              },
+              {
+                label: 'Comercial',
+                sub: 'Edificios, oficinas y PyMES',
+                img: '/helpPhotos/2.jpg',
+                msg: 'Hola, necesito información sobre servicios para sector comercial.',
+              },
+              {
+                label: 'Hogar',
+                sub: 'Casas, apartamentos y condominios',
+                img: '/helpPhotos/3.jpg',
+                msg: 'Hola, necesito información sobre seguridad para mi hogar.',
+              },
+              {
+                label: 'Otros',
+                sub: 'Comercios, restaurantes y más',
+                img: '/helpPhotos/4.jpg',
+                msg: 'Hola, necesito información sobre servicios para mi negocio.',
+              },
+            ].map((item, i) => (
+              <a
+                key={i}
+                href={`https://wa.me/59170492410?text=${encodeURIComponent(item.msg)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.helpCard}
+                style={{ '--img': `url(${item.img})`, '--delay': `${i * 120}ms` }}
+              >
+              
+                {/* foto de fondo */}
+                <div className={styles.helpCardBg} />
+
+                {/* overlay oscuro que se levanta en hover */}
+                <div className={styles.helpCardOverlay} />
+
+                {/* número decorativo */}
+                <span className={styles.helpCardNumber}>0{i + 1}</span>
+
+                {/* contenido */}
+                <div className={styles.helpCardContent}>
+                  <h3 className={styles.helpCardLabel}>{item.label}</h3>
+                  <p className={styles.helpCardSub}>{item.sub}</p>
+
+                  {/* botón whatsapp que aparece en hover */}
+                  <div className={styles.helpCardCta}>
+                    <FontAwesomeIcon icon={faWhatsapp} />
+                    <span>Escribir ahora</span>
+                  </div>
+                </div>
+
+                {/* línea naranja inferior animada */}
+                <div className={styles.helpCardLine} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY US */}
+      <section id="why-us" className={styles.whyUs}>
+        <div className={styles.sectionInner}>
+
+          <p className={styles.sectionEyebrow}>¿Por qué nosotros?</p>
+          <h2 className={styles.sectionTitle}>
+            Atención profesional y personalizada<br />
+            <span className={styles.whyUsAccent}>con resultados consistentes.</span>
+          </h2>
+          {/* PASOS */}
+          <div className={styles.whyUsSteps}>
+
+            {[
+              { icon: faPhone,         label: 'Nos contactas'},
+              { icon: faHandshake,     label: 'Nos reunimos'},
+              { icon: faClipboardList, label: 'Planificamos'},
+              { icon: faRocket,        label: 'Ejecutamos'},
+            ].map((step, i) => (
+              <div key={i} className={styles.whyUsStepWrapper}>
+
+                {/* PASO */}
+                <div
+                  className={`${styles.whyUsStep} ${visibleWhyUs ? styles.whyUsStepVisible : ''}`}
+                  style={{ transitionDelay: `${i * 200}ms` }}
+                >
+
+                  {/* icono con anillo animado */}
+                  <div className={styles.whyUsIconWrap}>
+                    <div className={styles.whyUsIconRing} />
+                    <div className={styles.whyUsIconInner}>
+                      <FontAwesomeIcon icon={step.icon} className={styles.whyUsIcon} />
+                    </div>
+                  </div>
+
+                  <span className={styles.whyUsStepLabel}>{step.label}</span>
+                </div>
+
+                {/* FLECHA */}
+                {i < 3 && (
+                  <div
+                    className={`${styles.whyUsArrow} ${visibleWhyUs ? styles.whyUsArrowVisible : ''}`}
+                    style={{ transitionDelay: `${i * 200 + 300}ms` }}
+                  >
+                    <FontAwesomeIcon icon={faChevronRight} />
+                    <FontAwesomeIcon icon={faChevronRight} className={styles.whyUsArrow2} />
+                  </div>
+                )}
+
+              </div>
+            ))}
+          </div>
+
+          {/* LÍNEA DIVISORA */}
+          <div className={`${styles.whyUsDivider} ${visibleWhyUs ? styles.whyUsDividerVisible : ''}`} />
+
+          {/* FRASE CIERRE */}
+          <div className={`${styles.whyUsClosing} ${visibleWhyUs ? styles.whyUsClosingVisible : ''}`}>
+            <FontAwesomeIcon icon={faLocationDot} className={styles.whyUsClosingIcon} />
+            <p className={styles.whyUsClosingText}>
+              "Capacitamos, hacemos seguimiento{' '}
+              <span className={styles.whyUsClosingAccent}>y vamos hasta donde estés."</span>
+            </p>
+          </div>
+
+        </div>
+      </section>
+
       {/* STATS BAND */}
       <section id="stats-band" className={styles.statsBand}>
-        <h1 className={styles.comments} style={{ position: 'absolute', zIndex: 10, pointerEvents: 'none' }}>BandSection</h1>
         <div className={styles.statsGrid}>
-          {STATS.map((s, i) => (
-            <div key={i} className={`${styles.statItem} ${visibleStats ? styles.statVisible : ''}`} style={{ transitionDelay: `${i * 100}ms` }}>
-              <span className={styles.statValue}>{s.value}</span>
+          {[
+            { suffix: '+',  label: 'Años de experiencia',    idx: 0 },
+            { suffix: '+',  label: 'Clientes activos',       idx: 1 },
+            { suffix: 'K+', label: 'Extintores certificados', idx: 2 },
+            { suffix: '/7', label: 'Soporte de emergencia',  idx: 3 },
+          ].map((s) => (
+            <div key={s.idx} className={styles.statItem} style={{ opacity: 1, transform: 'none' }}>
+              <span className={styles.statValue}>
+                {s.idx === 2
+                  ? `${Math.floor(countedStats[s.idx] / 1000)}${s.suffix}`
+                  : `${countedStats[s.idx]}${s.suffix}`
+                }
+              </span>
               <span className={styles.statLabel}>{s.label}</span>
             </div>
           ))}
@@ -206,62 +396,45 @@ export default function HomePage() {
       {/* SERVICES */}
       <section id="servicios" className={styles.services}>
         <div className={styles.sectionInner}>
-          <h1 className={styles.comments}>ServicesSection</h1>
           <p className={styles.sectionEyebrow}>Lo que hacemos</p>
           <h2 className={styles.sectionTitle}>Servicios integrales<br />de protección contra incendios</h2>
           <div className={styles.servicesGrid}>
             {SERVICES.map((svc, i) => (
-              <div key={i} className={styles.serviceCard}>
-                <div className={styles.serviceIconWrap}>
-                  <FontAwesomeIcon icon={svc.icon} className={styles.serviceIcon} />
-                </div>
-                <h3 className={styles.serviceTitle}>{svc.title}</h3>
-                <p className={styles.serviceDesc}>{svc.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <div
+                key={i}
+                className={styles.serviceCard}
+                style={{ backgroundImage: `url(${svc.img})` }}
+              >
+                {/* degradado: sólido abajo-izquierda → transparente arriba-derecha */}
+                <div className={styles.serviceCardOverlay} />
 
-      {/* SECTORS */}
-      <section id="sectores" className={styles.sectors}>
-        <div className={styles.sectionInner}>
-          <h1 className={styles.comments}>SectorsSection</h1>
-          <p className={styles.sectionEyebrow}>¿A quién servimos?</p>
-          <h2 className={styles.sectionTitle}>Clientes que no<br />pueden fallar.</h2>
-          <p className={styles.sectorsSubtitle}>
-            Trabajamos con empresas e instituciones donde la seguridad no es opcional,
-            es parte del contrato.
-          </p>
-          <div className={styles.sectorsRow}>
-            {SECTORS.map((sec, i) => (
-              <div key={i} className={styles.sectorPill}>
-                <FontAwesomeIcon icon={sec.icon} className={styles.sectorIcon} />
-                <span>{sec.label}</span>
+                {/* contenido adelante */}
+                <div className={styles.serviceCardContent}>
+                  <div className={styles.serviceIconWrap}>
+                    <FontAwesomeIcon icon={svc.icon} className={styles.serviceIcon} />
+                  </div>
+                  <h3 className={styles.serviceTitle}>{svc.title}</h3>
+                  <p className={styles.serviceDesc}>{svc.desc}</p>
+                </div>
               </div>
             ))}
           </div>
-          <div className={styles.testimonialBox}>
-            <FontAwesomeIcon icon={faStar} className={styles.testimonialStar} />
-            <blockquote className={styles.testimonialQuote}>
-              "Prever Services ha sido el aliado que necesitábamos. Respuesta rápida, equipos certificados
-              y trato profesional. No trabajamos con nadie más."
-            </blockquote>
-            <cite className={styles.testimonialAuthor}>— Gerente de Operaciones, empresa industrial en Santa Cruz</cite>
-          </div>
         </div>
       </section>
+      
+      {/* SEPARADOR CON PNG */}
+      <div className={styles.sectionDivider}>
+        <img src="/ext.png" alt="Prever Services" className={styles.extSeparator} />
+      </div>
 
       {/* NOSOTROS */}
       <section id="nosotros" className={styles.about}>
         <div className={styles.aboutInner}>
           <div className={styles.aboutText}>
-            <h1 className={styles.comments}>UsSection</h1>
-            <p className={styles.sectionEyebrow}>Quiénes somos</p>
-            <h2 className={styles.sectionTitle}>5 años siendo<br />la primera llamada.</h2>
+            <p className={styles.sectionEyebrow2}>Quiénes somos</p>
+            <h2 className={styles.sectionTitle}>5 años anticipando<br />tu bienestar.</h2>
             <p className={styles.aboutBody}>
-              Nacimos en Bolivia con una misión clara: que cada empresa, hospital, colegio
-              y edificio del país tenga equipos de extinción que realmente funcionen cuando se necesitan.
+              Nacimos en Bolivia con una misión clara: que cada empresa, hospital, colegio y edificio del país tenga la capacidad de prevenir y actuar contra incendios y emergencias
             </p>
             <p className={styles.aboutBody}>
               Hoy somos el referente de confianza para clientes que manejan operaciones críticas.
@@ -277,34 +450,46 @@ export default function HomePage() {
               'Equipos con norma boliviana e internacional',
               'Documentación y trazabilidad completa',
               'Contratos de mantenimiento anuales',
-              'Cobertura en todo Santa Cruz',
+              'Cobertura a nivel nacional',
             ].map((f, i) => (
               <div key={i} className={styles.aboutFeatureItem}>
                 <FontAwesomeIcon icon={faCircleCheck} className={styles.aboutFeatureIcon} />
                 <span>{f}</span>
               </div>
             ))}
-          </div>
+
+  {/* REDES SOCIALES */}
+  <div className={styles.aboutSocials}>
+    <a href="https://facebook.com/preverservices" target="_blank" rel="noopener noreferrer" className={styles.aboutSocialLink}>
+      <FontAwesomeIcon icon={faFacebookF} />
+    </a>
+    <a href="https://instagram.com/preverservices" target="_blank" rel="noopener noreferrer" className={styles.aboutSocialLink}>
+      <FontAwesomeIcon icon={faInstagram} />
+    </a>
+    <a href="https://tiktok.com/@preverservices" target="_blank" rel="noopener noreferrer" className={styles.aboutSocialLink}>
+      <FontAwesomeIcon icon={faTiktok} />
+    </a>
+  </div>
+</div>
         </div>
       </section>
 
       {/* CONTACT */}
       <section id="contacto" className={styles.contact}>
         <div className={styles.contactInner}>
-          <h1 className={styles.comments}>ContactSection</h1>
           <p className={styles.sectionEyebrow}>Contacto</p>
-          <h2 className={styles.sectionTitle}>¿Listo para proteger<br />tu empresa?</h2>
+          <h2 className={styles.contactTitle}>¿Listo para proteger<br />lo que importa?</h2>
           <p className={styles.contactSub}>Nos ponemos en contacto en menos de 24 horas.</p>
           <div className={styles.contactCards}>
             <a href="tel:+59170000000" className={styles.contactCard}>
               <FontAwesomeIcon icon={faPhone} className={styles.contactCardIcon} />
               <span className={styles.contactCardLabel}>Llámanos</span>
-              <span className={styles.contactCardValue}>+591 7 000 0000</span>
+              <span className={styles.contactCardValue}>+591 70492410</span>
             </a>
             <a href="mailto:info@preverservices.bo" className={styles.contactCard}>
               <FontAwesomeIcon icon={faEnvelope} className={styles.contactCardIcon} />
               <span className={styles.contactCardLabel}>Escríbenos</span>
-              <span className={styles.contactCardValue}>info@preverservices.bo</span>
+              <span className={styles.contactCardValue}>prever.services@outlook.com</span>
             </a>
             <div className={styles.contactCard}>
               <FontAwesomeIcon icon={faLocationDot} className={styles.contactCardIcon} />
@@ -318,7 +503,6 @@ export default function HomePage() {
       {/* FOOTER */}
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <h1 className={styles.comments} style={{ position: 'absolute', zIndex: 10, pointerEvents: 'none', left: '50px' }}>Footer</h1>
           <span className={styles.footerBrand}>PREVER SERVICES</span>
           <span className={styles.footerCopy}>© {new Date().getFullYear()} · Bolivia · Todos los derechos reservados</span>
         </div>
