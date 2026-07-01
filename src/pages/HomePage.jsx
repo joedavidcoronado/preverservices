@@ -20,6 +20,8 @@ import {
   faAward,
 } from '@fortawesome/free-solid-svg-icons';
 
+const HERO_PHOTOS = Array.from({ length: 5 }, (_, i) => `/heroPhotos/${i + 1}.jpg`);
+
 const STATS = [
   { value: '5+', label: 'Años de experiencia' },
   { value: '500+', label: 'Clientes activos' },
@@ -61,6 +63,7 @@ const SECTORS = [
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
   const [visibleStats, setVisibleStats] = useState(false);
+  const [currentPhoto, setCurrentPhoto] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -78,6 +81,13 @@ export default function HomePage() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhoto(prev => (prev + 1) % HERO_PHOTOS.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className={styles.root}>
 
@@ -85,11 +95,10 @@ export default function HomePage() {
       <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ''}`}>
         <div className={styles.navInner}>
           <Link to="/" className={styles.navLogo}>
-            <img src="/logo.png" alt="Prever Services" className={styles.navLogoImg} />
+            <img src="/favicon.png" alt="Prever Services" className={styles.navLogoImg} />
             <span className={styles.navBrand}>PREVER<span className={styles.navBrandSub}>SERVICES</span></span>
           </Link>
-          
-          <h1 className={styles.comments}>Header</h1>
+          {/*<h1 className={styles.comments}>Header</h1>*/}
           <ul className={styles.navLinks}>
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#sectores">Sectores</a></li>
@@ -100,35 +109,85 @@ export default function HomePage() {
       </nav>
 
       {/* HERO */}
-      <section className={styles.hero}>
-        <div className={styles.heroContent}>
+      <section className={styles.heroWrapper}>
+
+        {/* CARRUSEL DE FONDO */}
+        <div className={styles.heroCarousel}>
+          {HERO_PHOTOS.map((src, i) => (
+            <div
+              key={i}
+              className={styles.heroCarouselSlide}
+              style={{
+                backgroundImage: `url(${src})`,
+                opacity: i === currentPhoto ? 1 : 0,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* DEGRADADO */}
+        <div className={styles.heroGradientOverlay} />
+
+        {/* HUMO VIDEO */}
+        <video
+          className={styles.smokeVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/smoke.mp4" type="video/mp4" />
+        </video>
+        <video
+          className={styles.smokeVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/fire.mp4" type="video/mp4" />
+        </video>
           
-          <h1 className={styles.comments}>HeroSection</h1>
-          <p className={styles.heroEyebrow}>Bolivia · 5 años protegiendo lo que importa</p>
-          <h1 className={styles.heroTitle}>
-            Donde hay fuego,<br />
-            <span className={styles.heroAccent}>nosotros llegamos primero.</span>
-          </h1>
-          <p className={styles.heroSub}>
-            Extintores, recargas, inspecciones y certificaciones para empresas grandes
-            que no se pueden dar el lujo de improvisar en seguridad.
-          </p>
-          <div className={styles.heroCtas}>
-            <a href="#contacto" className={styles.btnPrimary}>
-              Solicitar cotización <FontAwesomeIcon icon={faArrowRight} />
-            </a>
-            <a href="#servicios" className={styles.btnGhost}>Ver servicios</a>
+        {/* CONTENIDO */}
+        <div className={styles.hero}>
+          <div className={styles.heroContent}>
+            {/*<h1 className={styles.comments}>HeroSection</h1>*/}
+            <p className={styles.heroEyebrow}>+5 años anticipando tu bienestar</p>
+            <h1 className={styles.heroTitle}>
+              Donde hay fuego,<br />
+              <span className={styles.heroAccent}>nosotros llegamos primero.</span>
+            </h1>
+            <p className={styles.heroSub}>
+              Extintores y equipamento de lucha contra incendios, servicios de seguridad y salud ocupacional
+              y capacitaciones certificadas para aquellos que no se pueden dar el lujo de improvisar en seguridad.
+            </p>
+            <div className={styles.heroCtas}>
+              <a href="#contacto" className={styles.btnPrimary}>
+                Solicitar cotización <FontAwesomeIcon icon={faArrowRight} />
+              </a>
+              <a href="#servicios" className={styles.btnGhost}>Ver servicios</a>
+            </div>
           </div>
+
+          {/* reemplaza el div.heroVisual completo */}
+          <div className={styles.heroVisual}>
+            <div className={styles.heroGlow} />
+
+            {/* Contenedor apilado: frame1, frame3, frame2 */}
+            <div className={styles.logoStack}>
+              <img src="/frames/frame1.svg" alt="" className={`${styles.logoFrame} ${styles.logoFrame1}`} />
+              <img src="/frames/frame2.svg" alt="" className={`${styles.logoFrame} ${styles.logoFrame2}`} />
+              <img src="/frames/frame3.svg" alt="" className={`${styles.logoFrame} ${styles.logoFrame3}`} />
+            </div>
+
+            {/* frame4: letras, separado 20px abajo */}
+            <img src="/frames/frame4.svg" alt="Prever Services" className={`${styles.logoFrame} ${styles.logoFrame4}`} />
+          </div>
+
+          <a href="#stats-band" className={styles.heroScroll}>
+            <FontAwesomeIcon icon={faChevronDown} />
+          </a>
         </div>
-        <div className={styles.heroVisual}>
-          <div className={styles.heroGlow} />
-          <img
-            src="/logo.png"
-            alt="Prever Services Logo"
-            className={styles.heroLogo}
-          />
-        </div>
-        
       </section>
 
       {/* STATS BAND */}
@@ -259,7 +318,7 @@ export default function HomePage() {
       {/* FOOTER */}
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <h1 className={styles.comments} style={{ position: 'absolute', zIndex: 10, pointerEvents: 'none' , left:'50px'}}>Footer</h1>
+          <h1 className={styles.comments} style={{ position: 'absolute', zIndex: 10, pointerEvents: 'none', left: '50px' }}>Footer</h1>
           <span className={styles.footerBrand}>PREVER SERVICES</span>
           <span className={styles.footerCopy}>© {new Date().getFullYear()} · Bolivia · Todos los derechos reservados</span>
         </div>
