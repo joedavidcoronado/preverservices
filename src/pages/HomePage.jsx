@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import styles from './HomePage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTiktok, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import ChatBot from '../components/ChatBot';
 import {
   faShieldHalved,
   faFire,
@@ -131,6 +132,8 @@ export default function HomePage() {
 
   return (
     <div className={styles.root}>
+
+      <ChatBot />
 
       {/* NAV */}
       <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ''}`}>

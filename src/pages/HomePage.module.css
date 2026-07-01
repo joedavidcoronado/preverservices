@@ -1148,6 +1148,36 @@
    ============================================= */
 
 @media (max-width: 900px) {
+  .heroContent {
+    width: 100%; /* cancela el 110% del desktop */
+  }
+
+  .heroVisual {
+    width: 100%;
+    animation: none; /* evita que el float cause overflow */
+  }
+
+  .logoStack {
+    width: 220px;
+    height: 220px;
+  }
+
+  .logoFrame4 {
+    width: 220px;
+  }
+
+  .heroGlow {
+    width: 240px;
+    height: 240px;
+  }
+
+  .smokeVideo {
+    width: 100%;  /* ocupa todo el ancho en mobile */
+    height: 60%;  /* solo la parte inferior */
+    top: auto;
+    bottom: 0;
+  }
+
   .hero {
     grid-template-columns: 1fr;
     text-align: center;
@@ -1224,9 +1254,37 @@
   .sectionTitle {
     margin-bottom: 2rem;
   }
+
+  .extSeparator{
+    width: 100%;
+  }
 }
 
 @media (max-width: 600px) {
+
+  .heroTitle{
+    font-size: 2rem;
+  }
+
+  .heroSub {
+    font-size: small;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .heroCtas{
+    margin-top: -5%;
+    margin-bottom: 10%;
+    width: 100%;
+  }
+
+  .btnPrimary{
+    width: 55%;
+    height: 50px;
+    font-size: 0.8rem;
+    background-color: rgb(244, 156, 38);;
+  }
+  
   .navLinks {
     display: none;
   }
