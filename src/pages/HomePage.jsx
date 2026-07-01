@@ -69,6 +69,8 @@ export default function HomePage() {
   const [countedStats, setCountedStats] = useState([0, 0, 0, 0]);
   const [currentPhoto, setCurrentPhoto] = useState(0);
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const [visibleWhyUs, setVisibleWhyUs] = useState(false);
 
   useEffect(() => {
@@ -140,14 +142,40 @@ export default function HomePage() {
         <div className={styles.navInner}>
           <Link to="/" className={styles.navLogo}>
             <img src="/favicon.png" alt="Prever Services" className={styles.navLogoImg} />
-            <img src="/frames/frame4.svg" alt="" className={`${styles.logoNav}`} />
+            <img src="/frames/frame4.svg" alt="" className={styles.logoNav} />
           </Link>
-          {/*<h1 className={styles.comments}>Header</h1>*/}
+
+          {/* DESKTOP LINKS */}
           <ul className={styles.navLinks}>
             <li><a href="#sectores">Sectores</a></li>
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#contacto" className={styles.navCta}>Cotizar</a></li>
+          </ul>
+
+          {/* BURGER */}
+          <button
+            className={styles.burger}
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label="Menú"
+          >
+            <span className={`${styles.burgerLine} ${menuOpen ? styles.burgerLine1Open : ''}`} />
+            <span className={`${styles.burgerLine} ${menuOpen ? styles.burgerLine2Open : ''}`} />
+            <span className={`${styles.burgerLine} ${menuOpen ? styles.burgerLine3Open : ''}`} />
+          </button>
+        </div>
+
+        {/* MOBILE MENU */}
+        <div className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ''}`}>
+          <ul className={styles.mobileLinks}>
+            <li><a href="#sectores"  onClick={() => setMenuOpen(false)}>Sectores</a></li>
+            <li><a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a></li>
+            <li><a href="#nosotros"  onClick={() => setMenuOpen(false)}>Nosotros</a></li>
+            <li>
+              <a href="#contacto" className={styles.mobileNavCta} onClick={() => setMenuOpen(false)}>
+                Cotizar
+              </a>
+            </li>
           </ul>
         </div>
       </nav>

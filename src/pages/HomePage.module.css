@@ -114,6 +114,87 @@
   transform: translateY(-1px);
 }
 
+/* ---------- BURGER ---------- */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  z-index: 101;
+}
+
+.burgerLine {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* animación X al abrir */
+.burgerLine1Open { transform: translateY(7px) rotate(45deg); }
+.burgerLine2Open { opacity: 0; transform: scaleX(0); }
+.burgerLine3Open { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- MOBILE MENU ---------- */
+.mobileMenu {
+  display: none;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  background: rgba(32, 33, 36, 0.98);
+  backdrop-filter: blur(12px);
+}
+
+.mobileMenuOpen {
+  max-height: 400px;
+}
+
+.mobileLinks {
+  list-style: none;
+  margin: 0;
+  padding: 1rem 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.mobileLinks li a {
+  display: block;
+  padding: 0.9rem 0;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: color 0.2s;
+}
+
+.mobileLinks li:last-child a {
+  border-bottom: none;
+}
+
+.mobileLinks li a:hover {
+  color: rgb(244, 156, 38);
+}
+
+.mobileNavCta {
+  display: inline-flex !important;
+  margin-top: 0.5rem;
+  background: rgb(244, 156, 38) !important;
+  color: #000 !important;
+  padding: 0.7rem 1.5rem !important;
+  border-radius: 4px;
+  font-weight: 700 !important;
+  border-bottom: none !important;
+}
+
 /* ---------- HERO WRAPPER ---------- */
 .heroWrapper {
   position: relative;
@@ -1148,6 +1229,7 @@
    ============================================= */
 
 @media (max-width: 900px) {
+  
   .heroContent {
     width: 100%; /* cancela el 110% del desktop */
   }
@@ -1261,6 +1343,18 @@
 }
 
 @media (max-width: 600px) {
+
+  .navLinks {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
 
   .heroTitle{
     font-size: 2rem;
