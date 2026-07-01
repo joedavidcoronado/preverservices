@@ -141,8 +141,8 @@ export default function HomePage() {
           </Link>
           {/*<h1 className={styles.comments}>Header</h1>*/}
           <ul className={styles.navLinks}>
-            <li><a href="#servicios">Servicios</a></li>
             <li><a href="#sectores">Sectores</a></li>
+            <li><a href="#servicios">Servicios</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#contacto" className={styles.navCta}>Cotizar</a></li>
           </ul>
@@ -410,10 +410,12 @@ export default function HomePage() {
 
                 {/* contenido adelante */}
                 <div className={styles.serviceCardContent}>
-                  <div className={styles.serviceIconWrap}>
-                    <FontAwesomeIcon icon={svc.icon} className={styles.serviceIcon} />
+                  <div className={styles.serviceCardHeader}>
+                    <div className={styles.serviceIconWrap}>
+                      <FontAwesomeIcon icon={svc.icon} className={styles.serviceIcon} />
+                    </div>
+                    <h3 className={styles.serviceTitle}>{svc.title}</h3>
                   </div>
-                  <h3 className={styles.serviceTitle}>{svc.title}</h3>
                   <p className={styles.serviceDesc}>{svc.desc}</p>
                 </div>
               </div>
@@ -481,7 +483,7 @@ export default function HomePage() {
           <h2 className={styles.contactTitle}>¿Listo para proteger<br />lo que importa?</h2>
           <p className={styles.contactSub}>Nos ponemos en contacto en menos de 24 horas.</p>
           <div className={styles.contactCards}>
-            <a href="tel:+59170000000" className={styles.contactCard}>
+            <a href="tel:+59170492410" className={styles.contactCard}>
               <FontAwesomeIcon icon={faPhone} className={styles.contactCardIcon} />
               <span className={styles.contactCardLabel}>Llámanos</span>
               <span className={styles.contactCardValue}>+591 70492410</span>

@@ -882,15 +882,15 @@
 }
 
 .serviceIconWrap {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
   background: rgba(244, 156, 38, 0.12);
   border: 1px solid rgba(244, 156, 38, 0.3);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
   transition: background 0.3s, border-color 0.3s;
 }
 
@@ -901,15 +901,16 @@
 
 .serviceIcon {
   color: rgb(244, 156, 38);
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
 .serviceTitle {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  margin: 0 0 0.6rem;
+  margin: 0;
   color: #fff;
   line-height: 1.3;
+  text-align: left;
 }
 
 .serviceDesc {
@@ -921,6 +922,14 @@
   overflow: hidden;
   opacity: 0;
   transition: max-height 0.4s ease, opacity 0.4s ease;
+}
+
+.serviceCardHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
 }
 
 .serviceCard:hover .serviceDesc {
